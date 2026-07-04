@@ -1,5 +1,6 @@
-import { ApiResponse, PaginatedResponse } from '../types';
+import { ApiResponse, PaginatedResponse, CursorPaginatedResponse } from '../types';
 import { HTTP_STATUS, RESPONSE_MESSAGES } from '../response.constants';
+import { responseContext } from '../response.context';
 
 export class ResponseBuilder {
   /**
@@ -88,6 +89,49 @@ export class ResponseBuilder {
         page,
         limit,
         pages,
+      },
+      timestamp: new Date().toISOString(),
+      requestId,
+    };
+  }
+
+  /**
+   * Build a cursor-based paginated response for infinite-scroll / "load more" patterns
+   * @template T - Type of array items
+   * @param data - Array of items for the current page
+   * @param total - Total number of items available
+   * @param nextCursor - Cursor string for the next page
+   * @param hasNextPage - Whether more items exist after this page
+   * @param limit - Items per page
+   * @param message - Success message
+   * @param statusCode - HTTP status code
+   * @param requestId - Request tracking ID for correlation
+   * @returns CursorPaginatedResponse with cursor metadata
+   */
+  static cursorPaginated<T = any>(
+    data: T[],
+    total: number,
+    nextCursor: string | undefined,
+    hasNextPage: boolean,
+    limit: number,
+    previousCursor?: string,
+    hasPreviousPage?: boolean,
+    message: string = RESPONSE_MESSAGES.SUCCESS,
+    statusCode: number = HTTP_STATUS.OK,
+    requestId?: string
+  ): CursorPaginatedResponse<T> {
+    return {
+      success: true,
+      statusCode,
+      message,
+      data,
+      pagination: {
+        total,
+        nextCursor,
+        previousCursor,
+        hasNextPage,
+        hasPreviousPage: hasPreviousPage ?? false,
+        limit,
       },
       timestamp: new Date().toISOString(),
       requestId,

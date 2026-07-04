@@ -6,11 +6,13 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { DatabaseExceptionFilter } from './filters/database.filter';
 import { AuthExceptionFilter } from './filters/auth.filter';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { RequestContextInterceptor } from './request-context/request-context.interceptor';
 import { RESPONSE_FILTERS } from './response.constants';
 
 export interface ResponseModuleOptions {
   filters?: Array<keyof typeof RESPONSE_FILTERS>;
   enableResponseWrapper?: boolean;
+  enableRequestContext?: boolean;
 }
 
 const FILTER_MAP: Record<keyof typeof RESPONSE_FILTERS, Provider> = {
@@ -29,6 +31,13 @@ export class ResponseModule {
     const filterKeys = options?.filters ?? Object.keys(FILTER_MAP) as Array<keyof typeof RESPONSE_FILTERS>;
     for (const key of filterKeys) {
       providers.push(FILTER_MAP[key]);
+    }
+
+    if (options?.enableRequestContext) {
+      providers.push({
+        provide: APP_INTERCEPTOR,
+        useClass: RequestContextInterceptor,
+      });
     }
 
     if (options?.enableResponseWrapper) {

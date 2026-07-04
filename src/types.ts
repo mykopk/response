@@ -25,3 +25,20 @@ export interface PaginatedResponse<T = any> {
   timestamp: string;
   requestId?: string;
 }
+
+export interface CursorPaginatedResponse<T = any> {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: T[];
+  pagination: {
+    total: number;
+    nextCursor?: string;
+    previousCursor?: string;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    limit: number;
+  };
+  timestamp: string;
+  requestId?: string;
+}

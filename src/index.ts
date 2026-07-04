@@ -2,8 +2,11 @@ export * from './types';
 export * from './builders';
 export * from './filters';
 export * from './interceptors';
+export * from './decorators';
+export * from './request-context';
 export { ERROR_VIEWS_DIR } from './views-path';
 export { RESPONSE_FILTERS, HTTP_STATUS, RESPONSE_MESSAGES } from './response.constants';
 export { ResponseModule } from './response.module';
 export type { ResponseModuleOptions } from './response.module';
-
+export { responseContext } from './response.context';
+export type { ResponseContext } from './response.context';

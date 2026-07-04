@@ -51,6 +51,7 @@
   "scripts": {
     "build": "tsup && cp -r views dist/views",
     "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build",
     "prepack": "npm run build"
   },
