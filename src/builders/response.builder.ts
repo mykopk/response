@@ -29,6 +29,27 @@ export class ResponseBuilder {
   }
 
   /**
+   * Shorthand success response with no data payload (e.g. status-only endpoints)
+   * @param message - Success message
+   * @param statusCode - HTTP status code
+   * @param requestId - Request tracking ID for correlation
+   * @returns ApiResponse with no data field
+   */
+  static ok(
+    message: string = RESPONSE_MESSAGES.SUCCESS,
+    statusCode: number = HTTP_STATUS.OK,
+    requestId?: string
+  ): ApiResponse {
+    return {
+      success: true,
+      statusCode,
+      message,
+      timestamp: new Date().toISOString(),
+      requestId,
+    };
+  }
+
+  /**
    * Build an error response
    * @param message - Error message
    * @param code - Error code for categorization
