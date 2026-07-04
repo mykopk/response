@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<script>(function(){var t=localStorage.getItem('LoginTheme');if(!t){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('MykoLang');if(l==='ur'||l==='ar')document.documentElement.setAttribute('dir','rtl')})()</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{{title}} — MYKO</title>
+<link rel="preload" href="/public/fonts/montserrat.css" as="style">
+<link href="/public/fonts/montserrat.css" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/public/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/public/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/public/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/public/icons/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/public/icons/android-chrome-512x512.png">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'Montserrat',-apple-system,sans-serif;
+  background:var(--r-bg);
+  color:var(--r-text);
+  transition:background .3s,color .3s;
+}
+html{--r-bg:#f5f5f7;--r-card-bg:#fafafa;--r-text:#1c1c1e;--r-text-secondary:#6e6e73;--r-text-muted:#8e8e93;--r-border:#e5e5ea;--r-bg-secondary:#f5f5f5;--r-hover-bg:rgba(0,0,0,.04);--r-link:#007aff}
+html[data-theme=dark]{--r-bg:#121214;--r-card-bg:#1c1c1e;--r-text:#f0f0f2;--r-text-secondary:#8e8e93;--r-text-muted:#636366;--r-border:#38383a;--r-bg-secondary:#2c2c2e;--r-hover-bg:rgba(255,255,255,.06);--r-link:#0a84ff}
+.split{display:flex;flex-direction:column;height:100vh}
+.page-header{position:absolute;top:0;left:0;right:0;padding:24px 40px;z-index:10}
+.page-header-top{display:flex;align-items:center;justify-content:space-between}
+.page-header-logo{display:flex;align-items:center;gap:12px}
+.page-header-icon{width:52px;height:52px;border-radius:12px;object-fit:cover}
+.page-header-name{font-size:22px;font-weight:700;color:var(--r-text);letter-spacing:-.5px}
+.page-header-end{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.page-header-domain{font-size:12px;font-weight:500;color:var(--r-text-muted)}
+.page-header-credit{font-size:9px;font-weight:500;color:var(--r-text-muted);letter-spacing:.5px;text-transform:uppercase;opacity:.6}
+.right-panel{
+  flex:1;
+  background:var(--r-bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;
+  padding:100px 24px 80px;
+}
+.error-content{text-align:center;max-width:520px}
+.error-code{font-size:120px;font-weight:800;color:#ff5018;line-height:1;margin-bottom:4px;letter-spacing:-4px}
+.error-title{font-size:28px;font-weight:700;margin-bottom:16px}
+.error-description{font-size:15px;color:var(--r-text-secondary);line-height:1.6;margin-bottom:20px}
+.error-tag{
+  display:inline-block;
+  padding:5px 14px;
+  border-radius:20px;
+  background:var(--r-bg-secondary);
+  font-size:11px;font-weight:600;color:var(--r-text-muted);
+  letter-spacing:.3px;
+  text-transform:uppercase;
+}
+.right-footer{
+  position:absolute;bottom:24px;left:40px;right:40px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-links{display:flex;align-items:center;gap:6px}
+.footer-links a{font-size:11px;color:var(--r-text-muted);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--r-text)}
+.footer-dot{font-size:10px;color:var(--r-border)}
+.right-footer-end{display:flex;align-items:center;gap:8px}
+
+@media(max-width:768px){
+  .right-panel{padding:80px 20px 100px;justify-content:flex-start}
+  .page-header{padding:16px 20px}
+  .error-code{font-size:88px;letter-spacing:-3px}
+  .error-title{font-size:22px}
+  .error-description{font-size:14px}
+  .right-footer{position:static;margin-top:auto;padding:16px 20px 24px;flex-wrap:wrap;gap:8px}
+}
+</style>
+</head>
+<body>
+<div class="split">
+  <div class="page-header">
+    <div class="page-header-top">
+      <div class="page-header-logo">
+        <img src="https://cdn.myko.pk/appassets/appstore.png" alt="MYKO" class="page-header-icon" loading="lazy">
+        <span class="page-header-name">MYKO</span>
+      </div>
+      <div class="page-header-end">
+        <span class="page-header-domain">myko.pk</span>
+        <span class="page-header-credit">Powered by EO</span>
+      </div>
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="error-content">
+      <div class="error-code">{{statusCode}}</div>
+      <div class="error-title">{{title}}</div>
+      <div class="error-description">{{description}}</div>
+      {{#if errorCode}}
+      <div class="error-tag">{{errorCode}}</div>
+      {{/if}}
+    </div>
+    <div class="right-footer">
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <span class="footer-dot">·</span>
+        <a href="#">Terms of Service</a>
+        <span class="footer-dot">·</span>
+        <a href="#">Help</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

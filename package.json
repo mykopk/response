@@ -1,0 +1,74 @@
+{
+  "name": "@myko.pk/response",
+  "version": "1.0.0",
+  "description": "Shared response utilities, builders, and exception filters for MYKO services",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./builders": {
+      "import": {
+        "types": "./dist/builders/response.builder.d.ts",
+        "default": "./dist/builders/response.builder.js"
+      },
+      "require": {
+        "types": "./dist/builders/response.builder.d.ts",
+        "default": "./dist/builders/response.builder.cjs"
+      }
+    },
+    "./filters": {
+      "import": {
+        "types": "./dist/filters/index.d.ts",
+        "default": "./dist/filters/index.js"
+      },
+      "require": {
+        "types": "./dist/filters/index.d.ts",
+        "default": "./dist/filters/index.cjs"
+      }
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup && cp -r views dist/views",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "express": "^4.0.0"
+  },
+  "dependencies": {
+    "@myko.pk/logger": "*",
+    "rxjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@types/express": "^5.0.6",
+    "express": "^4.0.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}
