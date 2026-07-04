@@ -70,5 +70,13 @@
     "express": "^4.0.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mykopk/response.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mykopk/response/issues"
+  },
+  "homepage": "https://github.com/mykopk/response#readme"
 }

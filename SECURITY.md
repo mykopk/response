@@ -2,10 +2,16 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in `@myko.pk/response`, please report it privately by emailing **security@myko.pk**.
+Please report security vulnerabilities by emailing **security@myko.pk**.
 
-Please do not disclose security vulnerabilities publicly until we have had an opportunity to investigate and address them.
+You should receive an acknowledgment within 48 hours. We appreciate responsible disclosure and will work with you to understand and address the issue.
 
-## Scope
+## Disclosure Policy
 
-This security policy applies to all versions of `@myko.pk/response` published on npm.
+- Do not open public issues for security vulnerabilities.
+- We will investigate and respond promptly.
+- Once resolved, we will disclose the details in a responsible manner.
+
+## PGP Key
+
+PGP key reference is available upon request.

@@ -1,18 +1,65 @@
-# @myko.pk/response
+<p align="center">
+  <h1 align="center">@myko.pk/response</h1>
+  <p align="center"><strong>Consistent responses. Clear errors.</strong></p>
+  <p align="center">Shared response utilities, builders, and exception filters for MYKO services. Provides a unified API response envelope, configurable NestJS exception filters, and a response interceptor for automatic wrapping.</p>
+  <p align="center">
+    <a href="https://www.npmjs.com/package/@myko.pk/response"><img src="https://img.shields.io/npm/v/@myko.pk/response?style=for-the-badge&logo=npm&logoColor=white" alt="npm version"></a>
+    <a href="https://www.npmjs.com/package/@myko.pk/response"><img src="https://img.shields.io/npm/dm/@myko.pk/response?style=for-the-badge&logo=npm&logoColor=white" alt="npm downloads"></a>
+    <a href="https://github.com/mykopk/response/actions"><img src="https://img.shields.io/github/actions/workflow/status/mykopk/response/ci.yml?style=for-the-badge&logo=githubactions&logoColor=white&label=CI" alt="build"></a>
+    <a href="https://github.com/mykopk/response"><img src="https://img.shields.io/github/stars/mykopk/response?style=for-the-badge&logo=github" alt="stars"></a>
+    <a href="https://github.com/mykopk/response"><img src="https://img.shields.io/github/forks/mykopk/response?style=for-the-badge&logo=github" alt="forks"></a>
+    <a href="https://github.com/mykopk/response"><img src="https://img.shields.io/github/issues/mykopk/response?style=for-the-badge&logo=github" alt="issues"></a>
+    <a href="https://github.com/mykopk/response"><img src="https://img.shields.io/github/last-commit/mykopk/response?style=for-the-badge&logo=github" alt="last commit"></a>
+    <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="license"></a>
+  </p>
+</p>
 
-Shared response utilities, builders, and exception filters for MYKO services.
+## 📑 Table of Contents
 
-## Installation
+- [Description](#description)
+- [Key Features](#key-features)
+- [Use Cases](#use-cases)
+- [Tech Stack](#tech-stack)
+- [Quick Start](#quick-start)
+- [Available Scripts](#available-scripts)
+- [Project Structure](#project-structure)
+- [Contributors](#contributors)
+- [Contributing](#contributing)
+- [License](#license)
+
+## 📝 Description
+
+@myko.pk/response provides a standardised response envelope (`ApiResponse<T>`) and a set of reusable NestJS exception filters for every MYKO service. The `ResponseBuilder` class offers a fluent API for constructing success, error, paginated, and specialised responses. Built-in exception filters handle `HttpException`, validation errors, database errors, and auth failures — all rendered into a consistent `ApiResponse` shape.
+
+## ✨ Key Features
+
+- **📦 Unified Response Envelope** — Every response follows the `ApiResponse<T>` shape: `statusCode`, `message`, `data`, `meta`, `timestamp`, `requestId`, `path`.
+- **🏗️ Fluent Response Builder** — `ResponseBuilder.success()`, `ResponseBuilder.error()`, `ResponseBuilder.paginated()`, and specialised methods for bulk and import/export operations.
+- **🛡️ Configurable Exception Filters** — 5 NestJS exception filters covering global, validation, HTTP, database, and auth exceptions. Register them all or pick specific ones via `ResponseModule.forRoot()`.
+- **🔄 Response Interceptor** — Automatically wraps controller returns into `ApiResponse` with zero boilerplate.
+- **📘 Fully Typed** — Full TypeScript support with typed response envelopes and filter options.
+
+## 🎯 Use Cases
+
+- Standardising API response format across all MYKO NestJS microservices.
+- Replacing ad-hoc error handling with consistent, typed exception filters.
+- Automatically wrapping all controller responses in a uniform envelope.
+- Handling validation errors with structured field-level error messages.
+- Rendering user-friendly error pages for browser-facing requests.
+
+## 🛠️ Tech Stack
+
+- 📘 **TypeScript**
+- 🪺 **NestJS**
+- 🚂 **Express**
+
+## ⚡ Quick Start
 
 ```bash
 npm install @myko.pk/response
 ```
 
-## Usage
-
-### Response Builder
-
-```typescript
+```ts
 import { ResponseBuilder } from '@myko.pk/response';
 
 // Success response
@@ -25,83 +72,92 @@ ResponseBuilder.error('User not found', 'USER_NOT_FOUND', 404, 'User ID: 123', r
 ResponseBuilder.paginated(items, total, page, limit, 'Users fetched', 200, requestId);
 ```
 
-### Exception Filters
+Register exception filters:
 
-```typescript
+```ts
+import { Module } from '@nestjs/common';
 import { ResponseModule } from '@myko.pk/response';
 
 @Module({
-  imports: [ResponseModule.forRoot()]
+  imports: [ResponseModule.forRoot()],
 })
 export class AppModule {}
 ```
 
-Or selectively register filters:
+## 🚀 Available Scripts
 
-```typescript
-import { ResponseModule, RESPONSE_FILTERS } from '@myko.pk/response';
+- **build** — `npm run build`
+- **dev** — `npm run dev`
 
-ResponseModule.forRoot({
-  filters: [RESPONSE_FILTERS.GLOBAL, RESPONSE_FILTERS.VALIDATION],
-});
+## 📁 Project Structure
+
+```
+.
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── SECURITY.md
+├── package.json
+├── src
+│   ├── builders
+│   │   └── response.builder.ts
+│   ├── filters
+│   │   ├── auth.filter.ts
+│   │   ├── database.filter.ts
+│   │   ├── global-exception.filter.ts
+│   │   ├── http-exception.filter.ts
+│   │   └── validation.filter.ts
+│   ├── interceptors
+│   │   └── response.interceptor.ts
+│   ├── index.ts
+│   ├── response.constants.ts
+│   ├── response.module.ts
+│   ├── types.ts
+│   └── views-path.ts
+├── tsconfig.json
+├── tsup.config.mjs
+└── views
+    └── error.hbs
 ```
 
-### Response Interceptor
+## 🛠️ Development Setup
 
-Automatically wraps controller returns in `ApiResponse`:
+1. Install Node.js (v18+ recommended)
+2. Install dependencies: `npm install`
+3. Build: `npm run build`
 
-```typescript
-ResponseModule.forRoot({ enableResponseWrapper: true });
-```
+> **Note:** This package does not currently have tests. Tests will be added in a future release.
 
-## Constants
+## 👥 Contributors
 
-```typescript
-import { HTTP_STATUS, RESPONSE_MESSAGES, RESPONSE_FILTERS } from '@myko.pk/response';
+<p align="left">
+<a href="https://github.com/arsalanwahab" title="arsalanwahab"><img src="https://avatars.githubusercontent.com/u/178069156?v=4&s=64" width="64" height="64" alt="arsalanwahab" style="border-radius:50%" /></a>
+</p>
 
-HTTP_STATUS.OK        // 200
-HTTP_STATUS.CREATED   // 201
-HTTP_STATUS.ACCEPTED  // 202
-HTTP_STATUS.NO_CONTENT // 204
+[See the full list of contributors →](https://github.com/mykopk/response/graphs/contributors)
 
-RESPONSE_MESSAGES.SUCCESS
-RESPONSE_MESSAGES.CREATED
-RESPONSE_MESSAGES.UPDATED
-```
+## 👥 Contributing
 
-## API
+Contributions are welcome! Here's the standard flow:
 
-### ResponseBuilder
+1. **Fork** the repository
+2. **Clone** your fork: `git clone https://github.com/mykopk/response.git`
+3. **Branch**: `git checkout -b feature/your-feature`
+4. **Commit**: `git commit -m 'feat: add some feature'`
+5. **Push**: `git push origin feature/your-feature`
+6. **Open** a pull request
 
-| Method | Status | Description |
-|--------|--------|-------------|
-| `success()` | 200 | Standard success |
-| `created()` | 201 | Resource created |
-| `accepted()` | 202 | Async operation accepted |
-| `noContent()` | 204 | No content |
-| `updated()` | 200 | Resource updated |
-| `deleted()` | 200 | Resource deleted |
-| `error()` | 400 | Error response |
-| `paginated()` | 200 | Paginated list |
-| `redirect()` | 302 | Redirect |
-| `fileDownload()` | 200 | File download metadata |
-| `bulkOperation()` | 200/207 | Bulk operation result |
-| `partialSuccess()` | 207 | Partial success |
-| `importExport()` | 200/207 | Import/export result |
+Please follow the existing code style and include tests for new behavior where applicable.
 
-### Filters
+## 📜 License
 
-| Filter | Handles |
-|--------|---------|
-| `GlobalExceptionFilter` | All uncaught exceptions, renders HTML for browser requests |
-| `ValidationExceptionFilter` | `BadRequestException` with validation error formatting |
-| `HttpExceptionFilter` | All `HttpException` instances |
-| `DatabaseExceptionFilter` | Database errors (TypeORM, Prisma) |
-| `AuthExceptionFilter` | `UnauthorizedException` / `ForbiddenException` |
+This project is licensed under the **MIT** License.
 
-## Build
 
-```bash
-npm run build    # tsup → dist/ (CJS + ESM)
-npm run dev      # tsup --watch
-```
+MYKO Pakistan
+
+Detail	Information
+Website	myko.pk
+Email	support@myko.pk
+About	Building digital infrastructure and super-app experiences for millions of users across Pakistan.
+Built with ❤️ in Pakistan 🇵🇰
